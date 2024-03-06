@@ -22,6 +22,7 @@ Then run;
 ```sh
 cd .images\php\app
 php artisan migrate
+php artisan db:seed
 ```
 
 The API requires JWT to authenticate API requests. to generate a JWT to be used in the Front end app run the following CURL; (password is hard coded to 1234 register user function is not implemented)
