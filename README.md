@@ -15,7 +15,7 @@ make run_dev
 
 Code for the application is in the `images\php\app` folder
 
-To run the application make sure the correct db credentiols are in the `images\php\app\.env` file. It is already set to poinn to the mysql container stated with the above command.
+To run the application make sure the correct db credentiols are in the `images\php\app\.env.example` file. So rename it to `.env` It is already set to poinn to the mysql container stated with the above command.
 
 Then run;
 
