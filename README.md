@@ -1,75 +1,36 @@
-# Docker + Lumen with Nginx, MySQL, and Memcached
-
-![image](Lumen_splash.png)
-
-## Why?
-
-Setting up an entire Lumen stack can be time consuming. This repo is a quick way to write apps in PHP using Lumen from an any Docker client. It uses docker-compose to setup the application services, databases, cache, etc...
-
 ## Clone this repo
 
 ```bash
-git clone https://github.com/saada/docker-lumen.git
-cd docker-lumen
+git clone git@github.com:UdyW/storelab_api.git
+cd storelab_api
 ```
 
-## Create Lumen App
-
-now, create the app in the `images/php` directory named `app`
+## Run Lumen API
 
 ```bash
-docker run --rm -it -v $(pwd)/images/php:/app $(docker build -q .) composer create-project --prefer-dist laravel/lumen ./app
+make run_dev
 ```
 
-### Configuration
+### Details
 
-There are two configurations using `.env` files. One `.env` file for docker-compose.yaml and another for the php application.
+Code for the application is in the `images\php\app` folder
+
+To run the application make sure the correct db credentiols are in the `images\php\app\.env` file. It is already set to poinn to the mysql container stated with the above command.
+
+Then run;
 
 ```sh
-# copy both files and make changes to them if needed
-cp .env.docker.example .env
-cp .env.app.example images/php/app/.env
-```
-
-To change configuration values, look in the `docker-compose.yml` file and change the `php` container's environment variables. These directly correlate to the Lumen environment variables.
-
-## Docker Setup
-
-### [Docker for Mac](https://docs.docker.com/docker-for-mac/)
-
-### [Docker for Windows](https://docs.docker.com/docker-for-windows/)
-
-### [Docker for Linux](https://docs.docker.com/engine/installation/linux/)
-
-### Build & Run
-
-```bash
-docker-compose up --build -d
-```
-
-Navigate to [http://localhost:80](http://localhost:80) and you should see something like this
-![image](Lumen_browser.png)
-
-Success! You can now start developing your Lumen app on your host machine and you should see your changes on refresh! Classic PHP development cycle. A good place to start is `images/php/app/routes/web.php`.
-
-Feel free to configure the default port 80 in `docker-compose.yml` to whatever you like.
-
-### Stop Everything
-
-```bash
-docker-compose down
-```
-
-## Running Artisan commands
-
-```sh
-docker-compose exec php sh
-# inside the container
-cd ..
+cd .images\php\app
 php artisan migrate
-php artisan cache:clear
 ```
 
-## Contribute
+The API requires JWT to authenticate API requests. to generate a JWT to be used in the Front end app run the following CURL; (password is hard coded to 1234 register user function is not implemented)
 
-Submit a Pull Request!
+```sh
+curl  -X POST \
+  'http://localhost/auth/login' \
+  --header 'Accept: */*' \
+  --header 'User-Agent: Thunder Client (https://www.thunderclient.com)' \
+  --form 'email="udy@1234.com"' \
+  --form 'password="1234"'
+```
